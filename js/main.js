@@ -1,6 +1,25 @@
 // encontrar a altura e largura da pagina do usuario em tempo
 var largura = 0
 var altura = 0
+var vidas = 1
+var tempo = 30
+
+var criaMoscaTempo = 2000
+
+var nivel = window.location.search
+nivel = nivel.replace('?', '')
+
+// aplicando os niveis de dificuldade
+if (nivel === 'facil') {
+    //tempo de 2000ms
+    criaMoscaTempo = 2000
+} else if (nivel === 'normal') {
+    //tempo de 1500ms
+    criaMoscaTempo = 1500
+} else if (nivel === 'dificil') {
+    //tempo de 1000ms
+    criaMoscaTempo = 1000
+}
 
 function ajustaTamanhoTela() {
     largura = window.innerWidth
@@ -9,8 +28,37 @@ function ajustaTamanhoTela() {
 
 ajustaTamanhoTela()
 
+// ajustando o cronometro
+var cronometro = setInterval(function () {
+
+    tempo -= 1
+
+    if (tempo < 0) {
+        clearInterval(cronometro)
+        clearInterval(criaMosca)
+        window.location.href = 'vitoria.html'
+    } else {
+        document.getElementById('cronometro').innerHTML = tempo
+    }
+
+}, 1000)
+
 // criando posições randomicas para a mosca com base nos limitadores de alturaXlargura da pagina
 function posicaoRandomica() {
+
+    // remover o mosquito anterior caso ele exista
+    if (document.getElementById('mosca')) {
+        document.getElementById('mosca').remove()
+
+        // controlando os pontos de vida
+        if (vidas > 3) {
+            window.location.href = 'fimDeJogo.html'
+        } else {
+            document.getElementById('vida' + vidas).src = 'img/coracao_vazio.png'
+            vidas++
+        }
+
+    }
 
     var posicaoX = Math.floor(Math.random() * largura) - 100
     var posicaoY = Math.floor(Math.random() * altura) - 100
@@ -26,6 +74,11 @@ function posicaoRandomica() {
     mosca.style.left = posicaoX + 'px'
     mosca.style.top = posicaoY + 'px'
     mosca.style.position = 'absolute'
+    mosca.id = 'mosca'
+    // controlando os pontos de vida
+    mosca.onclick = function () {
+        this.remove()
+    }
 
     document.body.appendChild(mosca)
 }
@@ -55,4 +108,3 @@ function ladoAleatorio() {
             return 'ladoB'
     }
 }
-

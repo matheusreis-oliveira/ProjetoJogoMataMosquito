@@ -17,9 +17,41 @@
 /* LADO DA MOSCA */
 
 .ladoA {
-    transform: scaleX(1)
+  transform: scaleX(1);
 }
 
 .ladoB {
-    transform: scaleX(-1)
+  transform: scaleX(-1);
+}
+
+/* CENÁRIO */
+body {
+  background: url(../img/bg.jpg) no-repeat;
+  background-size: cover;
+}
+
+.painel {
+  position: absolute;
+  width: 200px;
+  padding: 10px;
+  left: 0px;
+  bottom: 0px;
+  border-top: 1px solid white;
+  border-radius: 8px;
+  background-color: white;
+  opacity: 0.7;
+}
+
+.vidas {
+  float: left;
+}
+
+.cronometro {
+  float: left;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+html {
+    cursor: url(../img/mata_mosca.png) 30 30, auto;
 }
